@@ -8,13 +8,20 @@ import FolderIcon from "@mui/icons-material/Folder";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useLocations } from "../context/LocationContext";
 import "./../App.css";
+import { createSvgIcon } from "@mui/material";
 
 const LocationList = () => {
-  const { locations, removeLocation } = useLocations();
+  const { locations, removeLocation, setClikedLocation } = useLocations();
 
   const handleRemove = (id) => {
     removeLocation(id);
   };
+
+  const onClickLocation = (lat, lng) => {
+    setClikedLocation({ lat: lat, lng: lng });
+  };
+
+  const HomeIcon = createSvgIcon(<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />, "Home");
 
   return (
     <div className="location-list-wrapper">
@@ -30,8 +37,8 @@ const LocationList = () => {
             }
           >
             <ListItemAvatar>
-              <Avatar>
-                <FolderIcon />
+              <Avatar sx={{ cursor: "pointer" }} onClick={() => onClickLocation(location.lat, location.lng)}>
+                <HomeIcon />
               </Avatar>
             </ListItemAvatar>
             <ListItemText
