@@ -7,6 +7,7 @@ export const useLocations = () => useContext(LocationContext);
 export const LocationProvider = ({ children }) => {
   const [locations, setLocations] = useState([]);
   const collectionName = "locations";
+  const [clikedLocation, setClikedLocation] = useState({});
 
   useEffect(() => {
     fetchLocations();
@@ -34,6 +35,8 @@ export const LocationProvider = ({ children }) => {
         fetchLocations,
         addNewLocation,
         removeLocation,
+        clikedLocation,
+        setClikedLocation,
       }}
     >
       {children}
