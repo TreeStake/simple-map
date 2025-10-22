@@ -1,7 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMapsLibrary } from "@vis.gl/react-google-maps";
+import Button from "@mui/material/Button";
+import "./../App.css";
+import { useLocations } from "../context/LocationContext";
 
 const AutocompleteInput = () => {
+  const { addNewLocation } = useLocations();
+  const [selectedLocation, setSelectedLocation] = useState({});
   const inputRef = useRef(null);
   const places = useMapsLibrary("places");
 
@@ -15,30 +20,34 @@ const AutocompleteInput = () => {
 
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
-      console.log(place);
+      let placeToAdd = {
+        name: place.name,
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+        createdAt: new Date().toISOString(),
+      };
+      setSelectedLocation(placeToAdd);
     });
 
     return () => autocomplete.unbindAll();
   }, [places]);
 
+  const handleAdd = async () => {
+    if (selectedLocation.name) {
+      await addNewLocation(selectedLocation);
+      setSelectedLocation({});
+    } else {
+      window.alert("Виберіть іншу локацію");
+    }
+  };
+
   return (
-    <input
-      ref={inputRef}
-      type="text"
-      placeholder="Введіть локацію..."
-      style={{
-        width: "300px",
-        padding: "10px",
-        fontSize: "16px",
-        borderRadius: "8px",
-        border: "1px solid #ccc",
-        position: "absolute",
-        top: "20px",
-        left: "50vw",
-        zIndex: 999,
-        translate: "-50% 0px",
-      }}
-    />
+    <div className="input-wrapper">
+      <input ref={inputRef} className="auto-input" type="text" placeholder="Введіть локацію..." />
+      <Button variant="contained" onClick={handleAdd}>
+        Зберегти
+      </Button>
+    </div>
   );
 };
 

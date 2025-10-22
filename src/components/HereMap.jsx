@@ -29,10 +29,10 @@ const HereMap = ({ children }) => {
     const _ui = window.H.ui.UI.createDefault(map, defaultLayers);
 
     return () => map.dispose();
-  }, []);
+  });
 
   return (
-    <div ref={mapRef} style={{ width: "100vw", height: "100vh", position: "relative" }}>
+    <div ref={mapRef} style={{ width: "100vw", height: "100vh", position: "relative", overflow: "scroll" }}>
       {children}
     </div>
   );

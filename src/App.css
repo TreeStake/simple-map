@@ -1,4 +1,41 @@
-#root {
-  margin: 0 auto;
-  text-align: center;
+.input-wrapper {
+  position: absolute;
+  display: flex;
+  top: 20px;
+  left: 50vw;
+  z-index: 999;
+  translate: -50% 0px;
+}
+
+.auto-input {
+  width: 300px;
+  padding: 9px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-right: 20px;
+}
+
+.location-list-wrapper {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  min-width: 300px;
+  max-height: 100%;
+  overflow-y: scroll;
+  padding: 10px;
+  z-index: 999;
+  background-color: #ffff;
+}
+
+.location-list-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.location-list-title {
+  font-family: Arial, sans-serif;
+  margin-bottom: 20px;
+  text-align: left;
+  margin-left: 20px;
 }
